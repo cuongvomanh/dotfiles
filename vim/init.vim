@@ -1,1 +1,0 @@
-/home/cuong/Staff/dotfiles/vimrc

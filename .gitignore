@@ -1,3 +1,6 @@
 dist
 build
 vim/bundle/*
+vim/init.vim
+neovim
+zsh

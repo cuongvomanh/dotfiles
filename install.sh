@@ -118,7 +118,7 @@ function install_linux {
     apt install neovim
     git clone https://github.com/neovim/neovim.git
     cd neovim && apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
-    make CMAKE_BUILD_TYPE=RelWithDebInfo && make install
+    sudo make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install
 
     if [ "$(is_installed pip3)" == "1" ]; then
       pip3 install neovim --upgrade
@@ -157,6 +157,11 @@ function link_dotfiles {
     git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH/custom/plugins/zsh-autosuggestions
   fi
 
+  echo "Get dracula theme"
+  git clone https://github.com/dracula/zsh.git
+  mv ./zsh/dracula.zsh-theme $ZSH/themes/dracula.zsh-theme
+  mv ./zsh/lib $ZSH/themes/lib
+
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
   if [[ $vim_version == 'nvim' ]];then
@@ -170,6 +175,7 @@ function link_dotfiles {
 
 while test $# -gt 0; do 
   vim_version=$2
+  export ZSH=$HOME/.oh-my-zsh
   case "$1" in
     --help)
       echo "Help"
