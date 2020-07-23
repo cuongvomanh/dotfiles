@@ -53,7 +53,7 @@ set diffopt+=vertical
 set clipboard=unnamed
 
 set lazyredraw
-set termguicolors
+"set termguicolors
 
 set background=dark
 
@@ -196,3 +196,4 @@ let g:jsx_ext_required = 0
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
 endif
+let g:coc_disable_startup_warning = 1

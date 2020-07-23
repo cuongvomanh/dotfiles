@@ -71,6 +71,61 @@ function install_macos {
   fi
 }
 
+function install_linux {
+  if [[ $OSTYPE != linux* ]]; then
+    return
+  fi
+  echo "LINUX detected"
+
+  if [ $TERM_PROGRAM != "terminal.app" ]; then
+    echo "Installing terminator"
+    apt install terminator
+  fi
+
+  if [ "$(is_installed zsh)" == "0" ]; then
+    echo "Installing zsh"
+    apt install zsh
+    apt install zsh-completions
+  fi
+
+  if [ "$(is_installed fzf)" == "0" ]; then
+    echo "Installing fzf"
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+  fi
+
+  if [ "$(is_installed tmux)" == "0" ]; then
+    echo "Installing tmux"
+    apt install tmux
+    echo "Installing tmux-plugin-manager"
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  fi
+
+  if [ "$(is_installed git)" == "0" ]; then
+    echo "Installing Git"
+    apt install git
+  fi
+
+  if [ "$(is_installed node)" == "0" ]; then
+    echo "Installing Node"
+    apt install npm
+    sudo npm cache clean -f 
+    sudo n stable
+  fi
+
+  if [ "$(is_installed nvim)" == "0" ]; then
+    echo "Install neovim"
+    apt install neovim
+    git clone https://github.com/neovim/neovim.git
+    cd neovim && apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
+    make CMAKE_BUILD_TYPE=RelWithDebInfo && make install
+
+    if [ "$(is_installed pip3)" == "1" ]; then
+      pip3 install neovim --upgrade
+    fi
+  fi
+}
+
 function backup {
   echo "Backing up dotfiles"
   local current_date=$(date +%s)
@@ -104,14 +159,17 @@ function link_dotfiles {
 
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-  rm -rf $HOME/.config/nvim/init.vim
-  rm -rf $HOME/.config/nvim
-  mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
-  ln -s $(pwd)/vim $XDG_CONFIG_HOME/nvim
-  ln -s $(pwd)/vimrc $XDG_CONFIG_HOME/nvim/init.vim
+  if [[ $vim_version == 'nvim' ]];then
+    rm -rf $HOME/.config/nvim/init.vim
+    rm -rf $HOME/.config/nvim
+    mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+    ln -s $(pwd)/vim $XDG_CONFIG_HOME/nvim
+    ln -s $(pwd)/vimrc $XDG_CONFIG_HOME/nvim/init.vim
+  fi
 }
 
 while test $# -gt 0; do 
+  vim_version=$2
   case "$1" in
     --help)
       echo "Help"
@@ -119,6 +177,14 @@ while test $# -gt 0; do
       ;;
     --macos)
       install_macos
+      backup
+      link_dotfiles
+      zsh
+      source ~/.zshrc
+      exit
+      ;;
+    --linux)
+      install_linux
       backup
       link_dotfiles
       zsh

@@ -1,1 +1,1 @@
-/Users/hoangnn/Documents/Working/Codeaholicguy/dotfiles/vimrc
+/home/cuong/Staff/dotfiles/vimrc
