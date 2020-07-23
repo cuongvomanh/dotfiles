@@ -88,6 +88,11 @@ function install_linux {
     apt install zsh-completions
   fi
 
+  if [ "$(is_installed ag)" == "0" ]; then
+    echo "Installing The silver searcher"
+    apt install silversearcher-ag
+  fi
+
   if [ "$(is_installed fzf)" == "0" ]; then
     echo "Installing fzf"
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf

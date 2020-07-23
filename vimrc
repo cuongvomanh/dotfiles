@@ -196,4 +196,4 @@ let g:jsx_ext_required = 0
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
 endif
-let g:coc_disable_startup_warning = 1
+"let g:coc_disable_startup_warning = 1
