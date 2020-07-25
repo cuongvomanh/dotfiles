@@ -50,7 +50,7 @@ set complete+=kspell
 set diffopt+=vertical
 
 " Copy to clipboard
-set clipboard=unnamed
+set clipboard^=unnamed,unnamedplus
 
 set lazyredraw
 "set termguicolors
