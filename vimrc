@@ -117,7 +117,7 @@ nnoremap <Leader>/ :split<CR>
 map <C-h> :nohl<CR>
 
 " NERD tree configuration
-noremap <C-d> :NERDTreeToggle<CR>
+noremap <C-s> :NERDTreeToggle<CR>
 nnoremap F :NERDTreeFind<CR>
 
 let NERDTreeShowHidden=1
@@ -196,4 +196,8 @@ let g:jsx_ext_required = 0
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
 endif
+
+" Reload file from disk
+map <C-M> :bufdo e<CR>
+
 "let g:coc_disable_startup_warning = 1
