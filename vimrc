@@ -132,6 +132,7 @@ nnoremap <C-k> /<C-R><C-W><CR>
 nnoremap \ :Ag<SPACE>
 
 " coc.vim config
+source ~/.config/nvim/plugin-config/coc.vim
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 
@@ -139,6 +140,9 @@ nmap <silent> gd <Plug>(coc-definition)
 command! -nargs=0 Format :call CocAction('format')
 
 nmap <Leader>f :Format <CR>
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+autocmd BufWritePre *.go :OR
 
 " Easymotion
 " s{char}{char} to move to {char}{char} over windows
@@ -199,5 +203,6 @@ endif
 
 " Reload file from disk
 map <C-M> :bufdo e<CR>
-
+set makeprg=mvn\ clean\ package
+autocmd CursorHold * update
 "let g:coc_disable_startup_warning = 1
