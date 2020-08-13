@@ -118,13 +118,13 @@ map <C-h> :nohl<CR>
 
 " NERD tree configuration
 noremap <C-s> :NERDTreeToggle<CR>
-nnoremap F :NERDTreeFind<CR>
+nnoremap R :NERDTreeFind<CR>
 
 let NERDTreeShowHidden=1
 
 " fzf
 noremap ` :Files<CR>
-noremap ; :Buffers<CR>
+noremap ' :Buffers<CR>
 
 " bind \ (backward slash) to grep shortcut
 nnoremap K :Ag <C-R><C-W><CR>
