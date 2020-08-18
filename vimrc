@@ -50,7 +50,7 @@ set complete+=kspell
 set diffopt+=vertical
 
 " Copy to clipboard
-set clipboard^=unnamed,unnamedplus
+" set clipboard^=unnamed,unnamedplus
 
 set lazyredraw
 "set termguicolors
@@ -203,6 +203,8 @@ endif
 
 " Reload file from disk
 map <C-M> :bufdo e<CR>
+map <C-C> :set clipboard=unnamedplus<CR>
+map <C-J> :set clipboard&<CR>
 set makeprg=mvn\ clean\ package
 autocmd CursorHold * update
 "let g:coc_disable_startup_warning = 1
