@@ -208,3 +208,11 @@ map <C-J> :set clipboard&<CR>
 set makeprg=mvn\ clean\ package
 autocmd CursorHold * update
 "let g:coc_disable_startup_warning = 1
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
