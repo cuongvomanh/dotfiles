@@ -17,6 +17,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'dracula/vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
 Plug 'ervandew/supertab'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jiangmiao/auto-pairs'
