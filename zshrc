@@ -94,7 +94,7 @@ export PROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[pink]%}%D{%T}%{$reset_co
 # Setting ag as the default source for fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_COMMAND='ag --ignore node_modules -g ""'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
 source ~/.zshrc.local
