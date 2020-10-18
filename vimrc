@@ -124,8 +124,8 @@ nnoremap R :NERDTreeFind<CR>
 let NERDTreeShowHidden=1
 
 " fzf
-noremap ` :Files<CR>
-noremap ' :Buffers<CR>
+noremap <C-p> :Files<CR>
+noremap <C-[> :Buffers<CR>
 
 " bind \ (backward slash) to grep shortcut
 nnoremap K :Ag <C-R><C-W><CR>
