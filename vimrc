@@ -18,14 +18,15 @@ set smartindent
 set autoread
 set autowrite
 
-" Softtabs, 2 spaces
-set tabstop=2
-set shiftwidth=2
+" Softtabs, 4 spaces
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 set shiftround
 set expandtab
 
 " Make it obvious where 80 characters is
-set textwidth=80
+" set textwidth=80
 set colorcolumn=+1
 
 " Display extra whitespace
@@ -130,6 +131,9 @@ noremap ' :Buffers<CR>
 nnoremap K :Ag <C-R><C-W><CR>
 nnoremap <C-k> /<C-R><C-W><CR>
 nnoremap \ :Ag<SPACE>
+"nnoremap - :vim /\(interface\)\@<!\ EntityMapper\ /g src/**/* <C-R><C-W><CR>
+"command! LS call fzf#run(fzf#wrap({'source': 'ls'}))
+nnoremap - :vim /\(import.*\)\@<!oauth/g src/**/*
 
 " coc.vim config
 source ~/.config/nvim/plugin-config/coc.vim
@@ -202,7 +206,7 @@ if filereadable($HOME . "/.vimrc.local")
 endif
 
 " Reload file from disk
-map <C-M> :bufdo e<CR>
+map <C-JJ> :bufdo e<CR>
 map <C-C> :set clipboard=unnamedplus<CR>
 map <C-J> :set clipboard&<CR>
 set makeprg=mvn\ clean\ package
@@ -240,3 +244,5 @@ function! GoToColumnInFile (fileInfoString)
 endfunction
 nnoremap <leader>gf :call GoToColumnInFile(expand("<cWORD>"))<CR>
 " ~/.vimrc.bundles:3:5
+let g:vimspector_enable_mappings = 'HUMAN'
+packadd! vimspector

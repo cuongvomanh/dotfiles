@@ -83,6 +83,7 @@ export EDITOR='nvim'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+bindkey -v
 alias vim="nvim"
 alias reload='source ~/.zshrc'
 
@@ -99,3 +100,29 @@ export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
 source ~/.zshrc.local
 source ~/.bash_aliases
+
+fzf-note-widget() {
+  local selected num
+  setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2> /dev/null
+  #selected=( $(cat ~/NOTE/cmd | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
+  selected=( $(cat ~/NOTE/cmd |  $(__fzfcmd)) )
+  #echo $selected
+  local ret=$?
+  if [ -n "$selected" ]; then
+    num=$selected[1]
+    #echo "NUM: "$num
+    if [ -n "$num" ]; then
+      #zle vi-fetch-history -n 100
+      zle kill-whole-line
+      zle -U "$selected"
+      zle accept-line
+
+    fi
+  fi
+  zle reset-prompt
+  #echo $ret
+  return $ret
+  #return $selected
+}
+zle     -N   fzf-note-widget
+bindkey '^K' fzf-note-widget
