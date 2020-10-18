@@ -246,3 +246,4 @@ nnoremap <leader>gf :call GoToColumnInFile(expand("<cWORD>"))<CR>
 " ~/.vimrc.bundles:3:5
 let g:vimspector_enable_mappings = 'HUMAN'
 packadd! vimspector
+" git clone https://github.com/puremourning/vimspector ~/.vim/pack/vimspector/opt/vimspector
