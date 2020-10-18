@@ -224,3 +224,19 @@ nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 nnoremap <silent> <leader>+ :vertical resize +5<CR>
 nnoremap <silent> <leader>- :vertical resize -5<CR>
+nnoremap <silent> <leader>vr :vertical resize 30<CR>
+vmap <leader>y "+y
+function! GoToColumnInFile (fileInfoString)
+  let fileInfo0 = split(a:fileInfoString, "[")
+  let fileInfo1 = split(fileInfo0[1], ",")
+  let fileInfo2 = split(fileInfo1[1], "]")
+  let linen = fileInfo1[0]
+  let column = 0
+  normal! gf
+  if len(fileInfo0) > 1
+    let column = fileInfo2[0]
+    execute 'normal! ' . linen . 'G' . column . '|'
+  endif
+endfunction
+nnoremap <leader>gf :call GoToColumnInFile(expand("<cWORD>"))<CR>
+" ~/.vimrc.bundles:3:5
