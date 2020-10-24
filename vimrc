@@ -209,7 +209,8 @@ endif
 map <C-JJ> :bufdo e<CR>
 map <C-C> :set clipboard=unnamedplus<CR>
 map <C-J> :set clipboard&<CR>
-set makeprg=mvn\ clean\ package
+set makeprg=mvn\ clean\ package\ -Dstyle.color=never
+set errorformat=[ERROR]\ %f:[%l\\,%v]\ %m
 autocmd CursorHold * update
 "let g:coc_disable_startup_warning = 1
 
