@@ -85,6 +85,8 @@ export EDITOR='nvim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 bindkey -v
 alias vim="nvim"
+#alias vvim="vim --noplugin -u ~/.vimrc.local"
+alias vvim="vim -u ~/.vimrc.local"
 alias reload='source ~/.zshrc'
 
 alias gsync="git checkout master && git fetch upstream && git rebase upstream/master && git push"

@@ -25,6 +25,8 @@ set shiftwidth=4
 set shiftround
 set expandtab
 
+set hidden
+
 " Make it obvious where 80 characters is
 " set textwidth=80
 set colorcolumn=+1
@@ -125,7 +127,7 @@ let NERDTreeShowHidden=1
 
 " fzf
 nnoremap <C-p> :Files<CR>
-nnoremap <leader>pb :Buffers<CR>
+nnoremap <Leader>nb :Buffers<CR>
 
 " bind \ (backward slash) to grep shortcut
 nnoremap K :Ag <C-R><C-W><CR>
@@ -202,7 +204,7 @@ let g:jsx_ext_required = 0
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
-  source ~/.vimrc.local
+    source ~/.vimrc.local
 endif
 
 " Reload file from disk
@@ -212,7 +214,7 @@ map <C-J> :set clipboard&<CR>
 set makeprg=mvn\ clean\ package\ -Dstyle.color=never
 set errorformat=[ERROR]\ %f:[%l\\,%v]\ %m
 autocmd CursorHold * update
-"let g:coc_disable_startup_warning = 1
+let g:coc_disable_startup_warning = 1
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
