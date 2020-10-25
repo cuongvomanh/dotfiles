@@ -60,7 +60,6 @@ set lazyredraw
 
 set background=dark
 
-colorscheme dracula
 
 filetype plugin indent on
 
@@ -73,6 +72,10 @@ endif
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
 endif
+
+let g:gruvbox_guisp_fallback = "bg"
+"colorscheme dracula
+colorscheme gruvbox
 
 augroup vimrcEx
   autocmd!
