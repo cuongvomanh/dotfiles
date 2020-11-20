@@ -254,3 +254,163 @@ let g:vimspector_enable_mappings = 'HUMAN'
 packadd! vimspector
 " git clone https://github.com/puremourning/vimspector ~/.vim/pack/vimspector/opt/vimspector
 set cursorline
+set path+=**
+set suffixesadd=.json,.yml
+
+
+" 
+fun GotoWindow(id)
+    call win_gotoid(a:id)
+    MaximizerToggle
+endfun
+
+" Debugger remaps
+nnoremap <leader>m :MaximizerToggle!<CR>
+nnoremap <leader>dd :call vimspector#Launch()<CR>
+nnoremap <leader>dc :call GotoWindow(g:vimspector_session_windows.code)<CR>
+nnoremap <leader>dt :call GotoWindow(g:vimspector_session_windows.tagpage)<CR>
+nnoremap <leader>dv :call GotoWindow(g:vimspector_session_windows.variables)<CR>
+nnoremap <leader>dw :call GotoWindow(g:vimspector_session_windows.watches)<CR>
+nnoremap <leader>ds :call GotoWindow(g:vimspector_session_windows.stack_trace)<CR>
+nnoremap <leader>do :call GotoWindow(g:vimspector_session_windows.output)<CR>
+nnoremap <leader>de :call vimspector#Reset()<CR>
+
+nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
+
+nmap <leader>dl <Plug>VimspectorStepInto
+nmap <leader>dj <Plug>VimspectorStepOver
+nmap <leader>dk <Plug>VimspectorStepOut
+nmap <leader>d_ <Plug>VimspectorRestart
+nnoremap <leader>d<space> :call vimspector#Continue()<CR>
+
+nmap <leader>drc <Plug>VimspectorRunToCursor
+nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
+nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
+
+" <Plug>VimspectorStop
+" <Plug>VimspectorPause
+" <Plug>VimspectorAddFunctionBreakpoint
+
+nnoremap <leader>gc :GBranches<CR>
+nnoremap <leader>ga :Git fetch --all<CR>
+nnoremap <leader>grum :Git rebase upstream/master<CR>
+nnoremap <leader>grom :Git rebase origin/master<CR>
+nnoremap <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>pw :lua require('telescope.builtin').grep_string { search = vim.fn.expand("<cword>") }<CR>
+nnoremap <leader>pb :lua require('telescope.builtin').buffers()<CR>
+nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+nnoremap <leader>ps :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep For > ")})<CR>
+"nnoremap <C-p> :lua require('telescope.builtin').git_files()<CR>
+nnoremap <Leader>pf :lua require('telescope.builtin').find_files()<CR>
+nnoremap <Leader><CR> :so ~/.config/nvim/init.vim<CR>
+nnoremap <Leader>+ :vertical resize +5<CR>
+nnoremap <Leader>- :vertical resize -5<CR>
+nnoremap <Leader>rp :resize 100<CR>
+nnoremap <Leader>ee oif err != nil {<CR>log.Fatalf("%+v\n", err)<CR>}<CR><esc>kkI<esc>
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" greatest remap ever
+vnoremap <leader>p "_dP
+
+" vim TODO
+nmap <Leader>tu <Plug>BujoChecknormal
+nmap <Leader>th <Plug>BujoAddnormal
+let g:bujo#todo_file_path = $HOME . "/.cache/bujo"
+
+nnoremap <Leader>ww ofunction wait(ms: number): Promise<void> {<CR>return new Promise(res => setTimeout(res, ms));<CR>}<esc>k=i{<CR>
+
+" Vim with me
+nnoremap <leader>vwm :colorscheme gruvbox<bar>:set background=dark<CR>
+nmap <leader>vtm :highlight Pmenu ctermbg=gray guibg=gray
+
+inoremap <C-c> <esc>
+
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+
+nmap <leader>gh :diffget //3<CR>
+nmap <leader>gu :diffget //2<CR>
+nmap <leader>gs :G<CR>
+fun! EmptyRegisters()
+    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
+    for r in regs
+        call setreg(r, [])
+    endfor
+endfun
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
+" ES
+com! W w
+
+
+" Terminal commands
+" ueoa is first through fourth finger left hand home row.
+" This just means I can crush, with opposite hand, the 4 terminal positions
+nmap <leader>tu :call GotoBuffer(0)<CR>
+nmap <leader>te :call GotoBuffer(1)<CR>
+nmap <leader>to :call GotoBuffer(2)<CR>
+nmap <leader>ta :call GotoBuffer(3)<CR>
+
+nmap <leader>tsu :call SetBuffer(0)<CR>
+nmap <leader>tse :call SetBuffer(1)<CR>
+nmap <leader>tso :call SetBuffer(2)<CR>
+nmap <leader>tsa :call SetBuffer(3)<CR>
+
+" How to do this but much better?
+let g:win_ctrl_buf_list = [0, 0, 0, 0]
+
+fun! GotoBuffer(ctrlId)
+    if (a:ctrlId > 9) || (a:ctrlId < 0)
+        echo "CtrlID must be between 0 - 9"
+        return
+    end
+
+    let contents = g:win_ctrl_buf_list[a:ctrlId]
+    if type(l:contents) != v:t_list
+        echo "Nothing There"
+        return
+    end
+
+    let bufh = l:contents[1]
+    call nvim_win_set_buf(0, l:bufh)
+endfun
+fun! SetBuffer(ctrlId)
+    if has_key(b:, "terminal_job_id") == 0
+        echo "You must be in a terminal to execute this command"
+        return
+    end
+    if (a:ctrlId > 9) || (a:ctrlId < 0)
+        echo "CtrlID must be between 0 - 9"
+        return
+    end
+
+    let g:win_ctrl_buf_list[a:ctrlId] = [b:terminal_job_id, nvim_win_get_buf(0)]
+endfun
+
+fun! SendTerminalCommand(ctrlId, command)
+    if (a:ctrlId > 9) || (a:ctrlId < 0)
+        echo "CtrlID must be between 0 - 9"
+        return
+    end
+    let contents = g:win_ctrl_buf_list[a:ctrlId]
+    if type(l:contents) != v:t_list
+        echo "Nothing There"
+        return
+    end
+
+    let job_id = l:contents[0]
+    call chansend(l:job_id, a:command)
+endfun
+
